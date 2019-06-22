@@ -1,23 +1,27 @@
 extern crate rand;
 
+use log::{trace, debug};
 use std::cmp::Ordering;
 use std::io;
 use rand::Rng;
 
 fn main() {
+    env_logger::init();
     guess_a_number((1, 100));
 }
 
 fn guess_a_number((lb, hb): (u32, u32)) {
     println!("Guess the number");
     let secret_number = rand::thread_rng().gen_range(lb, hb + 1);
+    trace!("Secret number: {}", secret_number);
 
     loop {
         println!("Please input your guess.");
-        let mut guess = String::new();
-        io::stdin().read_line(&mut guess).expect("Failed to read line");
+        let mut guess_str = String::new();
+        io::stdin().read_line(&mut guess_str).expect("Failed to read line");
+        debug!("Scanned string: {:?}", guess_str);
 
-        let guess: u32 = match guess.trim().parse() {
+        let guess: u32 = match guess_str.trim().parse() {
             Ok(num) => num,
             Err(_) => {
                 println!("The input is not a number! Please input a valid number");
