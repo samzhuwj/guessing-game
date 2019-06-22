@@ -19,7 +19,10 @@ fn guess_a_number((lb, hb): (u32, u32)) {
 
         let guess: u32 = match guess.trim().parse() {
             Ok(num) => num,
-            Err(_) => continue,
+            Err(_) => {
+                println!("The input is not a number! Please input a valid number");
+                continue;
+            },
         };
         
         println!("You guessed: {}", guess);
