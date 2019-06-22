@@ -1,13 +1,25 @@
 extern crate rand;
 
 use log::{trace, debug};
+use rand::Rng;
 use std::cmp::Ordering;
 use std::io;
-use rand::Rng;
+use structopt::StructOpt;
 
 fn main() {
     env_logger::init();
-    guess_a_number((1, 100));
+    let opt = Opt::from_args();
+    for &lv in &opt.levels {
+        println!("Given number range 0~{}", lv);
+        guess_a_number((0, lv));
+    }
+}
+
+#[derive(StructOpt)]
+#[structopt(name="guessing_number_wasi")]
+struct Opt {
+    #[structopt(long="levels")]
+    levels: Vec<u32>,
 }
 
 fn guess_a_number((lb, hb): (u32, u32)) {
