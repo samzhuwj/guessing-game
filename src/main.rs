@@ -5,12 +5,12 @@ use std::io;
 use rand::Rng;
 
 fn main() {
-    guess_a_number()
+    guess_a_number((1, 100));
 }
 
-fn guess_a_number() {
+fn guess_a_number((lb, hb): (u32, u32)) {
     println!("Guess the number");
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(lb, hb + 1);
 
     loop {
         println!("Please input your guess.");
